@@ -9,7 +9,13 @@ import {
   X,
   ChevronDown,
 } from "lucide-react";
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 import { useSettings } from "../context/SettingsContext";
+
+function cn(...inputs: any[]) {
+  return twMerge(clsx(inputs));
+}
 
 interface SettingsPanelProps {
   isOpen: boolean;
