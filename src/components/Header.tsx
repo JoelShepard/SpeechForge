@@ -48,12 +48,16 @@ export function Header({
         <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-on-primary bg-primary shadow-[0_8px_18px_rgba(79,70,229,0.35)] dark:shadow-none transition-transform hover:scale-105">
           <AudioLines className="w-5 h-5 animate-pulse" />
         </div>
-        <div className="flex items-center gap-1">
-          <h1 className="text-xl font-extrabold tracking-tight text-on-surface truncate">
-            SpeechForge - Transcription/Translation
+        <div className="flex items-center gap-1.5 min-w-0">
+          <h1 className="text-xl font-extrabold tracking-tight text-on-surface truncate flex items-center gap-1.5">
+            <span className="shrink-0">SpeechForge</span>
+            <span className="text-on-surface-variant/40 font-normal shrink-0">·</span>
+            <span className="text-on-surface-variant font-medium text-base truncate">
+              {activeTab === "transcribe" ? "Transcribe" : "Translate"}
+            </span>
           </h1>
           <ChevronDown className={cn(
-            "w-4 h-4 text-on-surface-variant opacity-50 transition-all",
+            "w-4 h-4 text-on-surface-variant opacity-50 transition-all shrink-0",
             showLogoMenu && "rotate-180 opacity-100"
           )} />
         </div>
