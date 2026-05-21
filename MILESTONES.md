@@ -1,3 +1,3 @@
-# TranscribeJS Milestones
+# SpeechForge Milestones
 
 Track important project goals here. Mark items as completed only when fully verified.

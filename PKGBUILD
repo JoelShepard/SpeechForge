@@ -1,8 +1,8 @@
 # Maintainer: JoeShep
-pkgname=transcribejs
+pkgname=speechforge
 pkgver=0.4.6
 pkgrel=1
-pkgdesc="Voxscribe native Linux desktop app (Tauri)"
+pkgdesc="SpeechForge native Linux desktop app (Tauri)"
 arch=('x86_64')
 url="https://github.com/JoelShepard/TranscribeAPP"
 license=('MIT')
@@ -31,8 +31,8 @@ package() {
     cat > "$pkgdir/usr/share/applications/$pkgname.desktop" <<EOF
 [Desktop Entry]
 Type=Application
-Name=Voxscribe
-Comment=Audio transcription app
+Name=SpeechForge
+Comment=Audio transcription and translation app
 Exec=$pkgname
 Icon=$pkgname
 Terminal=false

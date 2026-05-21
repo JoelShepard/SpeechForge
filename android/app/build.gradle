@@ -25,10 +25,10 @@ def releaseKeyPassword = (project.findProperty("TRANSCRIBE_KEY_PASSWORD") ?: Sys
 def hasReleaseSigning = !releaseStorePassword.isBlank() && !releaseKeyAlias.isBlank() && !releaseKeyPassword.isBlank() && file(releaseStorePath).exists()
 
 android {
-    namespace = "com.transcribe.app"
+    namespace = "com.speechforge.app"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.transcribe.app"
+        applicationId "com.speechforge.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode appVersionCode
@@ -60,7 +60,7 @@ android {
                 signingConfig signingConfigs.release
             } else {
                 signingConfig signingConfigs.debug
-                logger.lifecycle("[TranscribeJS] Release signing credentials not found, using debug signing config.")
+                logger.lifecycle("[SpeechForge] Release signing credentials not found, using debug signing config.")
             }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

@@ -1,8 +1,8 @@
 {
-  "name": "transcribeapp",
-  "productName": "TranscribeJS",
+  "name": "speechforge",
+  "productName": "SpeechForge",
   "version": "0.4.6",
-  "description": "TranscribeJS transcription app",
+  "description": "SpeechForge transcription and translation app",
   "author": "JoeShep",
   "type": "module",
   "private": true,
