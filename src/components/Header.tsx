@@ -120,10 +120,10 @@ export function Header({
       >
         {/* Panel body */}
         <div className="rounded-b-[28px] rounded-t-none border-x border-b border-outline/25 bg-surface-container bg-clip-padding shadow-[0_16px_48px_rgba(22,27,45,0.18)] dark:shadow-[0_16px_48px_rgba(0,0,0,0.45)] overflow-hidden pointer-events-auto">
-          <div className="max-w-md mx-auto px-4 py-2">
+          <div className="px-3 sm:px-5 py-2">
 
             {/* Header inside the panel */}
-            <div className="px-4 pt-3 pb-2">
+            <div className="pt-3 pb-2">
               <p className="text-[10px] font-semibold uppercase tracking-widest text-on-surface-variant/50 select-none">
                 Modalità
               </p>
@@ -143,7 +143,7 @@ export function Header({
                 }
               }}
               className={cn(
-                "w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold transition-all duration-150 group",
+                "w-full flex items-center gap-3 py-3 text-sm font-semibold transition-all duration-150 group",
                 activeTab === "transcribe"
                   ? "text-primary"
                   : "text-on-surface hover:text-primary",
@@ -168,7 +168,7 @@ export function Header({
               )}
             </button>
 
-            <div className="mx-4 h-px bg-outline/10" />
+            <div className="h-px bg-outline/10" />
 
             {/* Translate option */}
             <button
@@ -178,7 +178,7 @@ export function Header({
                 setShowLogoMenu(false);
               }}
               className={cn(
-                "w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold transition-all duration-150 group",
+                "w-full flex items-center gap-3 py-3 text-sm font-semibold transition-all duration-150 group",
                 activeTab === "translate"
                   ? "text-tertiary"
                   : "text-on-surface hover:text-tertiary",
