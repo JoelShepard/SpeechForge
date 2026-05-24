@@ -31,7 +31,8 @@ import {
 import { useTheme } from "./context/ThemeContext";
 import { TitleBar } from "./components/TitleBar";
 import { TranslationCard } from "./components/TranslationCard";
-import { isTauriRuntime } from "./utils/platform";
+import { isTauriRuntime, isCapacitorRuntime } from "./utils/platform";
+import { App as CapApp } from "@capacitor/app";
 import {
   ERROR_MESSAGES,
   formatMicrophoneAccessError,
@@ -187,6 +188,54 @@ export default function App() {
     setDeepLPlan(storedDeepLPlan);
     setDeepLDefaultTargetLang(storedDeepLTarget);
   }, []);
+
+  // ── Capacitor Mobile Native Optimizations ─────────────────────────────────
+  useEffect(() => {
+    if (!isCapacitorRuntime()) {
+      return;
+    }
+
+    // 1. Prevent default context menu (except on inputs & textareas)
+    const handleContextMenu = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+      e.preventDefault();
+    };
+
+    document.addEventListener("contextmenu", handleContextMenu);
+
+    // 2. Handle hardware back button natively
+    const backButtonListenerPromise = CapApp.addListener("backButton", () => {
+      // If settings panel is open, close it
+      if (showSettings) {
+        setShowSettings(false);
+      }
+      // If logo/mode menu is open, close it
+      else if (showLogoMenu) {
+        setShowLogoMenu(false);
+      }
+      // If we are in the translation tab or transcription is not idle, go back to home
+      else if (activeTab === "translate" || status !== "idle" || transcription !== "") {
+        handleGoHome();
+      }
+      // Otherwise, exit the app
+      else {
+        void CapApp.exitApp();
+      }
+    });
+
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+      void backButtonListenerPromise.then((listener) => listener.remove());
+    };
+  }, [showSettings, showLogoMenu, activeTab, status, transcription, handleGoHome]);
 
   // ── Mistral settings ─────────────────────────────────────────────────────
   const saveSettings = async () => {
@@ -675,45 +724,51 @@ export default function App() {
             const logoContent = (
               <div className="relative">
                 <div className="flex items-center gap-3">
-                  {/* Home Button (Logo & Brand Name) */}
+                  {/* Home Button (Logo Icon) */}
                   <button
                     onClick={handleGoHome}
-                    className="flex items-center gap-3 min-w-0 group cursor-pointer border-none bg-transparent p-0 outline-none select-none focus-visible:ring-2 focus-visible:ring-[var(--md-sys-color-primary)]/50 focus-visible:ring-offset-2 rounded-2xl"
+                    className="w-10 h-10 rounded-2xl flex items-center justify-center text-[var(--md-sys-color-on-primary)] bg-[var(--md-sys-color-primary)] shadow-[0_8px_18px_rgba(39,80,196,0.30)] hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer border-none outline-none select-none focus-visible:ring-2 focus-visible:ring-[var(--md-sys-color-primary)]/50 focus-visible:ring-offset-2"
                     aria-label="SpeechForge Home"
                   >
-                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-[var(--md-sys-color-on-primary)] bg-[var(--md-sys-color-primary)] shadow-[0_8px_18px_rgba(39,80,196,0.30)] group-hover:scale-110 active:scale-95 transition-all duration-200">
-                      <AudioLines className="w-5 h-5" />
-                    </div>
-                    <span className="text-lg font-extrabold tracking-tight text-[var(--md-sys-color-on-surface)] group-hover:text-[var(--md-sys-color-primary)] transition-colors duration-200">
+                    <AudioLines className="w-5 h-5" />
+                  </button>
+
+                  {/* Brand & Mode Stack */}
+                  <div className="flex flex-col items-start sm:flex-row sm:items-center gap-0.5 sm:gap-2.5 leading-none">
+                    {/* Brand Name Button */}
+                    <button
+                      onClick={handleGoHome}
+                      className="text-lg font-extrabold tracking-tight text-[var(--md-sys-color-on-surface)] hover:text-[var(--md-sys-color-primary)] transition-colors duration-200 cursor-pointer border-none bg-transparent p-0 outline-none select-none focus-visible:ring-2 focus-visible:ring-[var(--md-sys-color-primary)]/50 rounded-lg"
+                    >
                       SpeechForge
-                    </span>
-                  </button>
+                    </button>
 
-                  {/* Dot Separator */}
-                  <span className="text-[var(--md-sys-color-on-surface-variant)]/40 font-normal select-none" aria-hidden="true">
-                    ·
-                  </span>
-
-                  {/* Mode Dropdown Trigger Button */}
-                  <button
-                    onClick={() => setShowLogoMenu(!showLogoMenu)}
-                    className="flex items-center gap-1.5 text-lg font-extrabold tracking-tight cursor-pointer border-none bg-transparent p-0 outline-none select-none group/toggle focus-visible:ring-2 focus-visible:ring-[var(--md-sys-color-primary)]/50 focus-visible:ring-offset-2 rounded-xl py-1 px-1.5 -mx-1"
-                    aria-label="Toggle Mode Menu"
-                    aria-expanded={showLogoMenu}
-                  >
-                    <span className={cn(
-                      "transition-colors duration-200",
-                      activeTab === "transcribe"
-                        ? "text-[var(--md-sys-color-primary)] group-hover/toggle:opacity-80"
-                        : "text-[var(--md-sys-color-tertiary)] group-hover/toggle:opacity-80"
-                    )}>
-                      {activeTab === "transcribe" ? "Transcribe" : "Translate"}
+                    {/* Dot Separator (desktop only) */}
+                    <span className="hidden sm:inline text-[var(--md-sys-color-on-surface-variant)]/40 font-normal select-none" aria-hidden="true">
+                      ·
                     </span>
-                    <ChevronDown className={cn(
-                      "w-4 h-4 text-[var(--md-sys-color-on-surface-variant)] opacity-50 transition-all duration-200 group-hover/toggle:opacity-80",
-                      showLogoMenu && "rotate-180 opacity-100"
-                    )} />
-                  </button>
+
+                    {/* Mode Dropdown Trigger Button */}
+                    <button
+                      onClick={() => setShowLogoMenu(!showLogoMenu)}
+                      className="flex items-center gap-1 sm:gap-1.5 text-sm sm:text-lg font-bold sm:font-extrabold tracking-tight cursor-pointer border-none bg-transparent p-0 outline-none select-none group/toggle focus-visible:ring-2 focus-visible:ring-[var(--md-sys-color-primary)]/50 rounded-xl py-0.5 sm:py-1 px-1 -mx-1"
+                      aria-label="Toggle Mode Menu"
+                      aria-expanded={showLogoMenu}
+                    >
+                      <span className={cn(
+                        "transition-colors duration-200",
+                        activeTab === "transcribe"
+                          ? "text-[var(--md-sys-color-primary)] group-hover/toggle:opacity-80"
+                          : "text-[var(--md-sys-color-tertiary)] group-hover/toggle:opacity-80"
+                      )}>
+                        {activeTab === "transcribe" ? "Transcribe" : "Translate"}
+                      </span>
+                      <ChevronDown className={cn(
+                        "w-3.5 h-3.5 sm:w-4 h-4 text-[var(--md-sys-color-on-surface-variant)] opacity-50 transition-all duration-200 group-hover/toggle:opacity-80",
+                        showLogoMenu && "rotate-180 opacity-100"
+                      )} />
+                    </button>
+                  </div>
                 </div>
               </div>
             );

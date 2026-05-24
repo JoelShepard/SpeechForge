@@ -81,6 +81,23 @@ body {
   touch-action: manipulation;
 }
 
+/* Disable user selection globally (native feel), except for inputs/textareas */
+*, *::before, *::after {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none; /* Disables standard iOS/Android long-press menu overlay */
+}
+
+input, textarea, [contenteditable="true"], .selectable {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Prevent image and link dragging (web-like behavior) */
+img, a {
+  -webkit-user-drag: none;
+}
+
 /* Hide scrollbars globally (Tauri and Mobile/Web) */
 * {
   scrollbar-width: none !important; /* Firefox */

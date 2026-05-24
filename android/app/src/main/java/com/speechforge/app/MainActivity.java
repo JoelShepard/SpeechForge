@@ -24,6 +24,16 @@ public class MainActivity extends BridgeActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         handleIntent(getIntent());
+
+        // Disable WebView overscroll and scrollbars to look and feel native
+        runOnUiThread(() -> {
+            if (getBridge() != null && getBridge().getWebView() != null) {
+                android.webkit.WebView webView = getBridge().getWebView();
+                webView.setOverScrollMode(android.view.View.OVER_SCROLL_NEVER);
+                webView.setVerticalScrollBarEnabled(false);
+                webView.setHorizontalScrollBarEnabled(false);
+            }
+        });
     }
 
     @Override
