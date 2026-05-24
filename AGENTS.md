@@ -1,6 +1,6 @@
-# TranscribeJS Agent Guidelines
+# SpeechForge Agent Guidelines
 
-This document serves as the primary instruction set for AI agents and developers working on the TranscribeJS codebase.
+This document serves as the primary instruction set for AI agents and developers working on the SpeechForge codebase.
 
 ## 1. Project Overview & Environment
 

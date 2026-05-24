@@ -1,11 +1,11 @@
 ---
 name: tauri-development
-description: "Desktop development for TranscribeJS using Tauri v2. Covers Rust backend, CSP configuration, window decorations (TitleBar), and desktop-specific build/release pipelines."
+description: "Desktop development for SpeechForge using Tauri v2. Covers Rust backend, CSP configuration, window decorations (TitleBar), and desktop-specific build/release pipelines."
 ---
 
 # Tauri Desktop Development Skill
 
-This skill provides the authoritative instructions for developing and building the TranscribeJS desktop application using Tauri v2.
+This skill provides the authoritative instructions for developing and building the SpeechForge desktop application using Tauri v2.
 
 ## 1. Environment & Architecture
 - **Backend:** Rust (`src-tauri/`).

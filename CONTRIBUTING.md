@@ -1,6 +1,6 @@
-# Contributing to TranscribeJS
+# Contributing to SpeechForge
 
-Thanks for contributing to TranscribeJS.
+Thanks for contributing to SpeechForge.
 
 This project targets Bun + React + TypeScript on the frontend, with Tauri for desktop and Capacitor for Android.
 
@@ -78,4 +78,4 @@ Project progress is tracked in `MILESTONES.md`.
 - [ ] Lint passes (`bun run lint`).
 - [ ] Docs updated when behavior or workflow changes.
 
-Thanks again for helping improve TranscribeJS.
+Thanks again for helping improve SpeechForge.

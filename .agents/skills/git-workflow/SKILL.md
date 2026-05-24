@@ -1,10 +1,10 @@
 ---
 name: git-workflow
-description: "Authoritative Git workflow for TranscribeJS. Covers branch naming, Conventional Commits, local squash merges, and automated version synchronization across multiple files."
+description: "Authoritative Git workflow for SpeechForge. Covers branch naming, Conventional Commits, local squash merges, and automated version synchronization across multiple files."
 ---
-# TranscribeJS Git Workflow Skill
+# SpeechForge Git Workflow Skill
 
-This skill provides the authoritative, end-to-end Git workflow for the TranscribeJS repository. It covers branch management, commit standards, local squash merges to `main`, and the automated release process.
+This skill provides the authoritative, end-to-end Git workflow for the SpeechForge repository. It covers branch management, commit standards, local squash merges to `main`, and the automated release process.
 
 ## 1. Branch Model
 

@@ -1,11 +1,11 @@
 ---
 name: audio-standards
-description: "Audio recording and processing standards for TranscribeJS. Covers dual recording paths (Native vs Web), browser security headers for SharedArrayBuffer, and audio service architecture."
+description: "Audio recording and processing standards for SpeechForge. Covers dual recording paths (Native vs Web), browser security headers for SharedArrayBuffer, and audio service architecture."
 ---
 
 # Audio Processing Standards Skill
 
-This skill provides the authoritative instructions for developing and maintaining the audio recording and processing pipelines of TranscribeJS.
+This skill provides the authoritative instructions for developing and maintaining the audio recording and processing pipelines of SpeechForge.
 
 ## 1. Dual Recording Path Integrity
 The application uses two separate recording paths in `App.tsx` because `MediaRecorder` is unreliable inside Tauri's Linux webview.

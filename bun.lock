@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "transcribeapp",
+      "name": "speechforge",
       "dependencies": {
         "@capacitor/app": "^8.1.0",
         "@tauri-apps/api": "^2.10.1",

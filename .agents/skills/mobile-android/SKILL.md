@@ -1,11 +1,11 @@
 ---
 name: mobile-android
-description: "Android development for TranscribeJS using Capacitor. Covers Android SDK requirements, Capacitor sync workflows, Gradle configuration, and CI/CD signing secrets."
+description: "Android development for SpeechForge using Capacitor. Covers Android SDK requirements, Capacitor sync workflows, Gradle configuration, and CI/CD signing secrets."
 ---
 
 # Mobile Android Development Skill
 
-This skill provides the authoritative instructions for developing and building the TranscribeJS mobile application for Android using Capacitor.
+This skill provides the authoritative instructions for developing and building the SpeechForge mobile application for Android using Capacitor.
 
 ## 1. Environment & Architecture
 - **Runtime:** Java 21.
